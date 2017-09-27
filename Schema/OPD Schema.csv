@@ -1,48 +1,48 @@
 C1,,REGION NAME:,
 D3,,MCH LIST No.,
 D4,,NAME OF MCH,
-D6,4.1,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Under 5 years,Females
-D7,4.1,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Under 5 years,Males
-D8,4.1,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Under 5 years,TOTAL
-D9,4.2,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Over 5 years,Females
-D10,4.2,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Over 5 years,Males
-D11,4.2,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Over 5 years,TOTAL
-D13,4.3.1,DIAGNOSIS / SYMPTOM,Uncomplicated Malaria - Unconfirmed (clinical diagnosis),Under 5yrs
-D14,4.3.1,DIAGNOSIS / SYMPTOM,Uncomplicated Malaria - Unconfirmed (clinical diagnosis),Over 5yrs
-D15,4.3.2,DIAGNOSIS / SYMPTOM,Uncomplicated Malaria - (confirmed by RDT/ Slide),Under 5yrs
-D16,4.3.2,DIAGNOSIS / SYMPTOM,Uncomplicated Malaria - (confirmed by RDT/ Slide),Over 5yrs
-D17,4.3.3,DIAGNOSIS / SYMPTOM,Severe Malaria,Under 5yrs
-D18,4.3.3,DIAGNOSIS / SYMPTOM,Severe Malaria,Over 5yrs
-D19,4.3.4,DIAGNOSIS / SYMPTOM,ARI (excluding Pneumonia),Under 5yrs
-D20,4.3.4,DIAGNOSIS / SYMPTOM,ARI (excluding Pneumonia),Over 5yrs
-D21,4.3.5,DIAGNOSIS / SYMPTOM,Pneumonia,Under 5yrs
-D22,4.3.5,DIAGNOSIS / SYMPTOM,Pneumonia,Over 5yrs
-D23,4.3.6,DIAGNOSIS / SYMPTOM,Measles,Under 5yrs
-D24,4.3.6,DIAGNOSIS / SYMPTOM,Measles,Over 5yrs
-D25,4.3.7,DIAGNOSIS / SYMPTOM,Acute Watery Diarrhoea,Under 5yrs
-D26,4.3.7,DIAGNOSIS / SYMPTOM,Acute Watery Diarrhoea,Over 5yrs
-D27,4.3.8,DIAGNOSIS / SYMPTOM,Bloody Diarrhoea,Under 5yrs
-D28,4.3.8,DIAGNOSIS / SYMPTOM,Bloody Diarrhoea,Over 5yrs
-D29,4.3.9,DIAGNOSIS / SYMPTOM,Anaemia,Under 5yrs
-D30,4.3.9,DIAGNOSIS / SYMPTOM,Anaemia,Over 5yrs
-D31,4.3.10,DIAGNOSIS / SYMPTOM,Mental Illnesses,Under 5yrs
-D32,4.3.10,DIAGNOSIS / SYMPTOM,Mental Illnesses,Over 5yrs
-D33,4.3.11,DIAGNOSIS / SYMPTOM,Fever of Unknown Origin (PUO),Under 5yrs
-D34,4.3.11,DIAGNOSIS / SYMPTOM,Fever of Unknown Origin (PUO),Over 5yrs
-D35,4.3.12,DIAGNOSIS / SYMPTOM,Obstetric Complication of pregnancy or delivery,Over 5yrs
-D36,4.3.13,DIAGNOSIS / SYMPTOM,Suspected TB,Under 5yrs
-D37,4.3.13,DIAGNOSIS / SYMPTOM,Suspected TB,Over 5yrs
-D38,4.3.14,DIAGNOSIS / SYMPTOM,STI,Under 5yrs
-D39,4.3.14,DIAGNOSIS / SYMPTOM,STI,Over 5yrs
-D40,4.3.15,DIAGNOSIS / SYMPTOM, UTI,Under 5yrs
-D41,4.3.15,DIAGNOSIS / SYMPTOM, UTI,Over 5yrs
-D42,4.3.16,DIAGNOSIS / SYMPTOM,Skin Diseases,Under 5yrs
-D43,4.3.16,DIAGNOSIS / SYMPTOM,Skin Diseases,Over 5yrs
-D44,4.3.17,DIAGNOSIS / SYMPTOM,Eye Infections,Under 5yrs
-D45,4.3.17,DIAGNOSIS / SYMPTOM,Eye Infections,Over 5yrs
-D46,4.3.18,DIAGNOSIS / SYMPTOM,Trauma and Burns,Under 5yrs
-D47,4.3.18,DIAGNOSIS / SYMPTOM,Trauma and Burns,Over 5yrs
-D48,4.3.19,DIAGNOSIS / SYMPTOM,Bites,Under 5yrs
-D49,4.3.19,DIAGNOSIS / SYMPTOM,Bites,Over 5yrs
-D50,4.3.20,DIAGNOSIS / SYMPTOM,Others,Under 5yrs
-D51,4.3.20,DIAGNOSIS / SYMPTOM,Others,Over 5yrs
+I6,4.1,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Under 5 years,Females
+I7,4.1,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Under 5 years,Males
+I8,4.1,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Under 5 years,TOTAL
+I9,4.2,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Over 5 years,Females
+I10,4.2,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Over 5 years,Males
+I11,4.2,OUTPATIENT - CURATIVE SERVICES,No. of OPD patients Over 5 years,TOTAL
+I13,4.3.1,DIAGNOSIS / SYMPTOM,Uncomplicated Malaria - Unconfirmed (clinical diagnosis),Under 5yrs
+I14,4.3.1,DIAGNOSIS / SYMPTOM,Uncomplicated Malaria - Unconfirmed (clinical diagnosis),Over 5yrs
+I15,4.3.2,DIAGNOSIS / SYMPTOM,Uncomplicated Malaria - (confirmed by RDT/ Slide),Under 5yrs
+I16,4.3.2,DIAGNOSIS / SYMPTOM,Uncomplicated Malaria - (confirmed by RDT/ Slide),Over 5yrs
+I17,4.3.3,DIAGNOSIS / SYMPTOM,Severe Malaria,Under 5yrs
+I18,4.3.3,DIAGNOSIS / SYMPTOM,Severe Malaria,Over 5yrs
+I19,4.3.4,DIAGNOSIS / SYMPTOM,ARI (excluding Pneumonia),Under 5yrs
+I20,4.3.4,DIAGNOSIS / SYMPTOM,ARI (excluding Pneumonia),Over 5yrs
+I21,4.3.5,DIAGNOSIS / SYMPTOM,Pneumonia,Under 5yrs
+I22,4.3.5,DIAGNOSIS / SYMPTOM,Pneumonia,Over 5yrs
+I23,4.3.6,DIAGNOSIS / SYMPTOM,Measles,Under 5yrs
+I24,4.3.6,DIAGNOSIS / SYMPTOM,Measles,Over 5yrs
+I25,4.3.7,DIAGNOSIS / SYMPTOM,Acute Watery Diarrhoea,Under 5yrs
+I26,4.3.7,DIAGNOSIS / SYMPTOM,Acute Watery Diarrhoea,Over 5yrs
+I27,4.3.8,DIAGNOSIS / SYMPTOM,Bloody Diarrhoea,Under 5yrs
+I28,4.3.8,DIAGNOSIS / SYMPTOM,Bloody Diarrhoea,Over 5yrs
+I29,4.3.9,DIAGNOSIS / SYMPTOM,Anaemia,Under 5yrs
+I30,4.3.9,DIAGNOSIS / SYMPTOM,Anaemia,Over 5yrs
+I31,4.3.10,DIAGNOSIS / SYMPTOM,Mental Illnesses,Under 5yrs
+I32,4.3.10,DIAGNOSIS / SYMPTOM,Mental Illnesses,Over 5yrs
+I33,4.3.11,DIAGNOSIS / SYMPTOM,Fever of Unknown Origin (PUO),Under 5yrs
+I34,4.3.11,DIAGNOSIS / SYMPTOM,Fever of Unknown Origin (PUO),Over 5yrs
+I35,4.3.12,DIAGNOSIS / SYMPTOM,Obstetric Complication of pregnancy or delivery,Over 5yrs
+I36,4.3.13,DIAGNOSIS / SYMPTOM,Suspected TB,Under 5yrs
+I37,4.3.13,DIAGNOSIS / SYMPTOM,Suspected TB,Over 5yrs
+I38,4.3.14,DIAGNOSIS / SYMPTOM,STI,Under 5yrs
+I39,4.3.14,DIAGNOSIS / SYMPTOM,STI,Over 5yrs
+I40,4.3.15,DIAGNOSIS / SYMPTOM, UTI,Under 5yrs
+I41,4.3.15,DIAGNOSIS / SYMPTOM, UTI,Over 5yrs
+I42,4.3.16,DIAGNOSIS / SYMPTOM,Skin Diseases,Under 5yrs
+I43,4.3.16,DIAGNOSIS / SYMPTOM,Skin Diseases,Over 5yrs
+I44,4.3.17,DIAGNOSIS / SYMPTOM,Eye Infections,Under 5yrs
+I45,4.3.17,DIAGNOSIS / SYMPTOM,Eye Infections,Over 5yrs
+I46,4.3.18,DIAGNOSIS / SYMPTOM,Trauma and Burns,Under 5yrs
+I47,4.3.18,DIAGNOSIS / SYMPTOM,Trauma and Burns,Over 5yrs
+I48,4.3.19,DIAGNOSIS / SYMPTOM,Bites,Under 5yrs
+I49,4.3.19,DIAGNOSIS / SYMPTOM,Bites,Over 5yrs
+I50,4.3.20,DIAGNOSIS / SYMPTOM,Others,Under 5yrs
+I51,4.3.20,DIAGNOSIS / SYMPTOM,Others,Over 5yrs

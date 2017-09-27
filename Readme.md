@@ -15,8 +15,11 @@ Installed using `pip3 install openpyxl`.
 Documentation at: https://openpyxl.readthedocs.org
 
 
+#Current Issues
 
+Total column is in different places in different sheets
 
+yagori is one of what may be several columns in the sheet - want to get the data for each of them, not just the total.
 
 
 
