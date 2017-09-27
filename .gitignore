@@ -1,0 +1,20 @@
+# Avoid uploading healthcare data to git.
+
+### MicrosoftOffice
+*.tmp
+# Word temporary
+*.doc*
+# Excel temporary
+*.xls*
+# Excel Backup File
+*.xlk
+# PowerPoint temporary
+*.ppt*
+# Visio autosave temporary files
+*.~vsd*
+
+### Dropbox
+*.dropbox
+
+### Ignore Icon created by dropbox for shared folder
+/Icon*
