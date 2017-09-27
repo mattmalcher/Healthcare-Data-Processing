@@ -18,3 +18,10 @@
 
 ### Ignore Icon created by dropbox for shared folder
 /Icon*
+
+### Ignore system files
+*.DS_store
+
+### Ignore pycharm directory
+*.idea/*
+
