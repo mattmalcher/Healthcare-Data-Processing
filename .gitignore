@@ -25,3 +25,5 @@
 ### Ignore pycharm directory
 *.idea/*
 
+### Ignore json data stores
+*.json

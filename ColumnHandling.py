@@ -23,7 +23,7 @@ for in_file in f_list:
     w_book = load_workbook(path + in_file, data_only=True)
 
     # Feed the first worksheet into getschema and get back the schema
-    schema = getschema(w_book.worksheets[0])
+    [type, schema, schema_id] = getschema(w_book.worksheets[0])
 
     # For each worksheet in the file/'workbook'...
     for w_sheet in w_book:
@@ -69,6 +69,7 @@ for in_file in f_list:
                     # Otherwise, append the header and its column index to the results array.
                     datacols.append([cell.value, cell.col_idx])
 
+        # print out items
         for item in datacols:
             print(item)
 
