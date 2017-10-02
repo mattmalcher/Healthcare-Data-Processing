@@ -49,12 +49,16 @@ def getschema(w_sheet):
 
 
 def year_from_fname(fname):
-# Use regular expressions to extract a 20xx year from a filename
+# Use regular expressions to extract *20XX* year from a filename where XX is two numbers
+    try:
+        re_year = re.search(r".*(20[0-9]{2}).*", fname).group(1)
+    except AttributeError:
+        print('Year Not Found in Filename')
+        re_year = 0
 
-    year=2016
+    year = int(re_year)
 
-
-    return(year)
+    return year
 
 # Define a data class for storing clinic data
 # Not used as custom classes cannot be serialised to json without more work

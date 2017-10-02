@@ -20,7 +20,11 @@ ClinicData = []
 # Iterate over the files
 for in_file in f_list:
 
+    # if the file is not an .xlsx then skip to the next one
     if not in_file.endswith('.xlsx'): continue
+
+    # Get year from the filename using regular expressions
+    f_year = year_from_fname(in_file)
 
     # Load workbook object - using data_only=True to get calculated values not formulae
     w_book = load_workbook(path + in_file, data_only=True)
@@ -38,7 +42,7 @@ for in_file in f_list:
         # Check if it is a month sheet, If its not, print a descriptive error
         if w_sheet.title not in validsheets:
             print('Error - Not in list of valid sheet names.')
-            break
+            continue
 
         # otherwise get on with it
 
@@ -92,19 +96,18 @@ for in_file in f_list:
 
                 # print(value,'   ', name)
 
-            ClinicDataObj = {}
-
-            ClinicDataObj['name'] = w_sheet['D4'].value
-            ClinicDataObj['year'] = 2016
-            ClinicDataObj['month'] = w_sheet.title
-
-            ClinicDataObj['data'] = {
-                'type': s_type,
-                'results': schema_data,
-                'schema_id': schema_id
+            ClinicDict = {
+                'name': w_sheet[column[1]+'4'].value,
+                'year': f_year,
+                'month': w_sheet.title,
+                'data': {
+                    'type': s_type,
+                    'results': schema_data,
+                    'schema_id': schema_id
+                    }
                 }
 
-            ClinicData.append(ClinicDataObj)
+            ClinicData.append(ClinicDict)
 
 print('done')
 
