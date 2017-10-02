@@ -27,3 +27,6 @@
 
 ### Ignore json data stores
 *.json
+
+### Ignore master csv with healthcare data stored in it
+master.csv

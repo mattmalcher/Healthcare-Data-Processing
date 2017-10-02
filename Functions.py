@@ -57,7 +57,7 @@ def year_from_fname(fname):
     return(year)
 
 # Define a data class for storing clinic data
-
+# Not used as custom classes cannot be serialised to json without more work
 # class CDO:
 #
 #     # Initialise items of the class with the clinic
