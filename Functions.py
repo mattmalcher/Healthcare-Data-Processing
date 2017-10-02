@@ -2,7 +2,7 @@
 import csv
 import os
 from openpyxl import load_workbook
-
+from openpyxl.utils import get_column_letter
 
 def readschema(filename):
     # Function to read the schema files (which define where to look for all the data) into lists

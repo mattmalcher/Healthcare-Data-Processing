@@ -8,14 +8,15 @@ path = 'Input/'
 f_list = os.listdir(path)
 
 # List of valid sheet names in the input files
-validsheets = ['Jan','Feb','Mar','Apr','May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+validsheets = ['Jan','Feb','Mar','Apr','May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
+               'January','February', 'March', 'April','May','June','July','August','September',
+               'October', 'November', 'December']
 
 # Iterate over the files
 for in_file in f_list:
 
     # Load workbook object - using data_only=True to get calculated values not formulae
     w_book = load_workbook(path+in_file, data_only=True)
-
 
     # Feed the first worksheet into getschema and get back the schema
     schema = getschema(w_book.worksheets[0])
