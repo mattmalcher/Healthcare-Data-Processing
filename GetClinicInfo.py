@@ -41,7 +41,7 @@ for item in clinics_s:
                 break
 
 
-with open('Schema/ClinicData.csv', 'w', newline='') as csvfile:
+with open('Schema/ClinicInfo.csv', 'w', newline='') as csvfile:
     wr = csv.writer(csvfile, dialect='excel')
 
     wr.writerow(['Name', 'Pop', 'Donor', 'Type', 'District', 'Region'])

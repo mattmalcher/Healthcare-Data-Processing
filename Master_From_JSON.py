@@ -42,9 +42,8 @@ months = [
             ['Nov', 'nov', 'November', 'november'],
             ['Dec', 'dec', 'December', 'december']]
 
-clinics=[
-
-]
+# Read Clinic Info from ClinicInfo.csv
+ClinicInfo = readClinicInfo()
 
 # Generate an ordered dictionary of months using above list of lists
 month_od = genOrderedDict(months)

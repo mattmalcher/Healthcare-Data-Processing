@@ -168,3 +168,25 @@ def clean_rows(rows, places_od):
     cleaned_rows=[]
 
     return cleaned_rows
+
+def readClinicInfo():
+
+    ClinicInfo=[]
+
+    with open('Schema/ClinicInfo.csv', newline='') as csvfile:
+
+        csvobj = csv.reader(csvfile, dialect='excel')
+
+        for row in csvobj:
+            ClinicInfo.append({
+                'Name': row[0],
+                'Pop': row[1],
+                'Donor': row[2],
+                'Type': row[3],
+                'District': row[4],
+                'Region': row[5]
+            })
+
+    return ClinicInfo
+
+
