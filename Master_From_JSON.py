@@ -42,10 +42,12 @@ months = [
             ['Nov', 'nov', 'November', 'november'],
             ['Dec', 'dec', 'December', 'december']]
 
-# Insert each set of items into an ordered dictionary
-month_od = collections.OrderedDict()
-for item in months:
-    month_od[item[0]] = item
+clinics=[
+
+]
+
+# Generate an ordered dictionary of months using above list of lists
+month_od = genOrderedDict(months)
 
 # Initialise data_ids list - this stores the year, month & clinic name
 # These should uniquely identify each clinic data item
@@ -57,41 +59,60 @@ for year in year_s:
         for clinic in clinics_s:
             data_ids.append([year, month, clinic])
 
-a = col_headings + imn_schema + opd_schema + mhd_schema
-data_rows = [['' for _ in range(len(a))] for _ in range(len(data_ids))]
+# Generate a combined list of column headings from the col_headings (first few columns) and the schema
+combined = col_headings + imn_schema + opd_schema + mhd_schema
 
+# Generate an empty list of lists for the data_rows so they can be indexed into
+# Uses list comprehensions.
+data_rows = [['' for _ in range(len(combined))] for _ in range(len(data_ids))]
+
+# Initialise row counter
 i = 0
-col_offset = len(col_headings)-len(data_ids[0])-1
 
-imn_idx = len(imn_schema) + col_offset
+# Generate indexes with which to put data into the data_rows
+# Done using the lengths of the schema and col_headings items
+imn_idx = len(imn_schema) + len(col_headings)
 opd_idx = len(opd_schema) + imn_idx
 mhd_idx = len(mhd_schema) + opd_idx
 
+# Iterate over our data_identifiers
 for ids in data_ids:
 
+    # Insert the data identifiers into the first 3 items of data_row
+    data_rows[i][0:3] = ids[0:3]
+
+    # Iterate over our clinic data items read in from the JSON
     for d_set in clinic_data:
 
+        # If the dataset item we are on matches the data row we are on:
+        # note the month (worksheet name) can be any of the alternatives listed above.
         if (d_set['year'] == ids[0]) and \
                 (d_set['month'] in month_od[ids[1]]) and \
                 (d_set['name'] == ids[2]):
 
+            # set the appropriate bits of the data row to the results value
             if d_set['data']['type'] == 'Immunisation':
-                data_rows[i][col_offset+1:imn_idx] = d_set['data']['results']
-
-            elif d_set['data']['type'] == 'Motherhood':
-                data_rows[i][imn_idx+1:opd_idx] = d_set['data']['results']
+                data_rows[i][len(col_headings):imn_idx] = d_set['data']['results']
 
             elif d_set['data']['type'] == 'OPD':
-                data_rows[i][opd_idx+1:mhd_idx] = d_set['data']['results']
+                data_rows[i][imn_idx:opd_idx] = d_set['data']['results']
+
+            elif d_set['data']['type'] == 'Motherhood':
+                data_rows[i][opd_idx:mhd_idx] = d_set['data']['results']
 
             else:
                 print(i, 'Data Incomplete')
 
     i += 1  # Increment data row counter
 
-Lmerge = [x + y for x,y in zip(data_ids, data_rows)]
 
-append_datarows(Lmerge)
+# clean rows
+
+# Prune empty datarows - ignoring first 3 columns
+pruned_rows = prune(data_rows, 3)
+
+# Append the datarows to the file
+append_datarows(pruned_rows)
 
 
 

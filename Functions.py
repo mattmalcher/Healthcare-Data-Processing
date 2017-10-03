@@ -122,3 +122,49 @@ def append_datarows(rows):
         wr = csv.writer(csvfile, dialect='excel')
         for row in rows:
             wr.writerow(row)
+
+
+def prune(rows, n):
+
+    pruned_rows = []
+
+    # Iterate over input rows
+    for row in rows:
+
+        # iterate over the items in each row
+        for item in row[n:-1]:
+
+            # if an item is found in the row that is not none and not '' then the row is appended
+            if (item is not None) and (item is not ''):
+                pruned_rows.append(row)
+                break  # break out of item for loop, back into row for loop
+
+
+    return pruned_rows
+
+
+def genOrderedDict(list):
+
+    # Insert each set of items into an ordered dictionary
+    od = collections.OrderedDict()
+    for item in list:
+        od[item[0]] = item
+
+    return od
+
+
+def clean_rows(rows, places_od):
+#
+# run over rows,
+#
+# if the row is not in the 'correct' list of names,
+#     iterate over each item in our dictionaries of alternatives
+#
+#     if it is in one of them
+#         change its name to the 'correct' one (i.e. the key)
+#
+#   will now be left with duplicate rows - same year, month, place
+#
+    cleaned_rows=[]
+
+    return cleaned_rows
