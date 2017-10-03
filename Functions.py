@@ -3,8 +3,10 @@ import csv
 import re
 import json
 import os
+import collections
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
+
 
 def readschema(filename):
     # Function to read the schema files (which define where to look for all the data) into lists
@@ -77,3 +79,46 @@ def year_from_fname(fname):
 #         self.data = {'type': '', 'schema_id': 0, 'results': []}
 #
 #
+
+def schema2header(schema):
+    # function to format ouput of readschema to some nice headers
+
+    headers = [] #Empty list to fill with headers
+
+    for item in schema:
+        # Schema consists of a list of lists, join the items in the inner lists using newline chars to generate headers
+        headers.append('\n'.join(item[1:-1]))
+
+    return headers
+
+
+def init_mastercsv():
+    # Initialise CSV file, writing headers from schema
+    with open('Output/master_out.csv', 'w', newline='') as csvfile:
+        wr = csv.writer(csvfile, dialect='excel')
+        wr.writerow(['Compiled healthcare data from files in \'Input\'',])
+
+        # Column Headings for Non-Schema Rows
+        col_headings = ['Year', 'Month','Region', 'Clinic Type',
+                        'District', 'Donor', 'Location of clinic', 'Est.Pop.']
+
+        # Read in schema as lists
+        imn_schema = schema2header(readschema('Schema/Immunisation Schema_01.csv'))
+        opd_schema = schema2header(readschema('Schema/OPD Schema_01.csv'))
+        mhd_schema = schema2header(readschema('Schema/Motherhood Schema_01.csv'))
+
+        # Combine the lists& column headings
+        combined_schema = col_headings + imn_schema + opd_schema + mhd_schema
+
+        wr.writerow(combined_schema)
+
+    return col_headings, imn_schema, opd_schema, mhd_schema
+
+
+def append_datarows(rows):
+    # Function to append rows to the master_out csv initialised by init_mastercsv
+
+    with open('Output/master_out.csv', 'a', newline='') as csvfile:
+        wr = csv.writer(csvfile, dialect='excel')
+        for row in rows:
+            wr.writerow(row)
