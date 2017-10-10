@@ -1,7 +1,7 @@
 from Functions import *
 
 # Function to initialise mastercsv with header rows defined by schema
-[col_headings, imn_schema, opd_schema, mhd_schema] = init_mastercsv()
+[col_headings, imn_schema, opd_schema, mhd_schema] = init_master_csv()
 
 # point to JSON written out by Read_to_JSON.py
 clinic_json = 'Output/clinicdata.json'
@@ -11,59 +11,55 @@ with open(clinic_json) as data_file:
     clinic_data = json.load(data_file)
     print("Number of clinics: ", len(clinic_data))
 
-# Get list of unique clinics, years and months
+# Initialise sets for clinics and years
 clinics_s = set()
 year_s = set()
-# month_s = set()
 
-# Create de-duplicated lists of years and clinic names present in input data
+# Iterate over clinic data, creating a de-duplicated lists of years and clinic region-name sets present in the JSON
 for item in clinic_data:
-    clinics_s.add(item['name'])
+    clinics_s.add(item['region']+' - '+item['clinic'])
     year_s.add(item['year'])
-    # month_s.add(item['month'])
-
-# # Print the de-duplicated list for inspection
-# print(sorted(year_s))
-# print(sorted(month_s))
-# print(sorted(clinics_s))
 
 # Read Clinic Info from ClinicInfo.csv
-ClinicInfo = readClinicInfo()
+ClinicInfo = read_clinic_info()
 
 # Generate an ordered dictionary of months using above list of lists
-month_od = genOrderedDict(months)
+# (Ordered dictionary is required to maintain jan-dec ordering when doing this)
+month_od = gen_ordered_dict(months)
 
-# Initialise data_ids list - this stores the year, month & clinic name
+# Initialise data_ids list - this stores the year, month & the concatenated: '<region> - <clinic name>'
 # These should uniquely identify each clinic data item
 data_ids = []
 
-# Generate structure for data to be written into
+# Generate structure for data to be written into using the sets from the JSON
 for year in year_s:
     for month in month_od:
-        for clinic in clinics_s:
+        for clinic in clinics_s:  # Note clinic_s is '<region> - <clinic name>'
             data_ids.append([year, month, clinic])
 
 # Generate a combined list of column headings from the col_headings (first few columns) and the schema
+# This is used here purely for getting the length of the row  with which to build data_rows
 combined = col_headings + imn_schema + opd_schema + mhd_schema
 
 # Generate an empty list of lists for the data_rows so they can be indexed into
+# (cant index to position in non-existing list)
 # Uses list comprehensions.
 data_rows = [['' for _ in range(len(combined))] for _ in range(len(data_ids))]
 
-# Initialise row counter
-i = 0
-
-# Generate indexes with which to put data into the data_rows
+# Generate column indexes with which to put data into the data_rows
 # Done using the lengths of the schema and col_headings items
 imn_idx = len(imn_schema) + len(col_headings)
 opd_idx = len(opd_schema) + imn_idx
 mhd_idx = len(mhd_schema) + opd_idx
 
+# Initialise row counter
+i = 0
+
 # Iterate over our data_identifiers
 for ids in data_ids:
 
-    # Insert the data identifiers into the first 3 items of data_row
-    data_rows[i][0:3] = ids[0:3]
+    # Insert the data identifiers into the first 2 items of data_row
+    data_rows[i][0:2] = ids[0:2]
 
     # Iterate over our clinic data items read in from the JSON
     for d_set in clinic_data:
@@ -72,9 +68,13 @@ for ids in data_ids:
         # note the month (worksheet name) can be any of the alternatives listed above.
         if (d_set['year'] == ids[0]) and \
                 (d_set['month'] in month_od[ids[1]]) and \
-                (d_set['name'] == ids[2]):
+                (d_set['region']+' - '+d_set['clinic'] == ids[2]):
 
-            # set the appropriate bits of the data row to the results value
+            # Set the region & clinic name
+            data_rows[i][2] = d_set['region']
+            data_rows[i][6] = d_set['clinic']
+
+            # set the appropriate columns of the data row (as determined using generated indexes) to the results values
             if d_set['data']['type'] == 'Immunisation':
                 data_rows[i][len(col_headings):imn_idx] = d_set['data']['results']
 
@@ -91,12 +91,13 @@ for ids in data_ids:
 
 
 # clean rows
+# Idea is to have a function here which handles duplicates caused by misspelled clinic names - i.e. yagoori yagori etc
 
 # Prune empty datarows - ignoring first 3 columns
 pruned_rows = prune(data_rows, 3)
 
 # Append the datarows to the file
-append_datarows(pruned_rows)
+append_data_rows(pruned_rows)
 
 
 

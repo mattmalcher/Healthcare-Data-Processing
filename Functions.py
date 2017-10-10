@@ -8,7 +8,7 @@ from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
 
 
-def readschema(filename):
+def read_schema(filename):
     # Function to read the schema files (which define where to look for all the data) into lists
 
     csvcontents = []
@@ -23,24 +23,24 @@ def readschema(filename):
     return csvcontents
 
 
-def getschema(w_sheet):
+def get_schema(w_sheet):
     # Function which takes a worksheet and returns the appropriate schema
 
     # Look in Cell B5 which contains different things for each sheet type
     sheet_indicator = w_sheet['B5'].value
 
     if sheet_indicator == 'EPI: CHILDREN':
-        schema = readschema('Schema/Immunisation Schema_01.csv')
+        schema = read_schema('Schema/Immunisation Schema_01.csv')
         schema_id = 'Immunisation Schema_01'
         s_type='Immunisation'
 
     elif sheet_indicator == 'OUTPATIENT - CURATIVE SERVICES':
-        schema = readschema('Schema/OPD Schema_01.csv')
+        schema = read_schema('Schema/OPD Schema_01.csv')
         schema_id = 'OPD Schema_01'
         s_type = 'OPD'
 
     elif sheet_indicator == 'SAFE MOTHERHOOD PROGRAMME':
-        schema = readschema('Schema/Motherhood Schema_01.csv')
+        schema = read_schema('Schema/Motherhood Schema_01.csv')
         schema_id = 'Motherhood Schema_01'
         s_type = 'Motherhood'
 
@@ -62,26 +62,9 @@ def year_from_fname(fname):
 
     return year
 
-# Define a data class for storing clinic data
-# Not used as custom classes cannot be serialised to json without more work
-# class CDO:
-#
-#     # Initialise items of the class with the clinic
-#     def __init__(self, name, year, month):
-#         self.name = name  # Clinic Name
-#         self.year = year  # Year of Data Collection
-#         self.month = month  # Month of Data Collection
-#
-#         self.region = ''    #
-#         self.clin_typ = ''
-#
-#         # Dictionary for data, containing type (immunisation, motherhood, opd)
-#         self.data = {'type': '', 'schema_id': 0, 'results': []}
-#
-#
 
 def schema2header(schema):
-    # function to format ouput of readschema to some nice headers
+    # function to format ouput of read_schema to some nice headers
 
     headers = [] #Empty list to fill with headers
 
@@ -92,7 +75,7 @@ def schema2header(schema):
     return headers
 
 
-def init_mastercsv():
+def init_master_csv():
     # Initialise CSV file, writing headers from schema
     with open('Output/master_out.csv', 'w', newline='') as csvfile:
         wr = csv.writer(csvfile, dialect='excel')
@@ -103,9 +86,9 @@ def init_mastercsv():
                         'District', 'Donor', 'Location of clinic', 'Est.Pop.']
 
         # Read in schema as lists
-        imn_schema = schema2header(readschema('Schema/Immunisation Schema_01.csv'))
-        opd_schema = schema2header(readschema('Schema/OPD Schema_01.csv'))
-        mhd_schema = schema2header(readschema('Schema/Motherhood Schema_01.csv'))
+        imn_schema = schema2header(read_schema('Schema/Immunisation Schema_01.csv'))
+        opd_schema = schema2header(read_schema('Schema/OPD Schema_01.csv'))
+        mhd_schema = schema2header(read_schema('Schema/Motherhood Schema_01.csv'))
 
         # Combine the lists& column headings
         combined_schema = col_headings + imn_schema + opd_schema + mhd_schema
@@ -115,7 +98,7 @@ def init_mastercsv():
     return col_headings, imn_schema, opd_schema, mhd_schema
 
 
-def append_datarows(rows):
+def append_data_rows(rows):
     # Function to append rows to the master_out csv initialised by init_mastercsv
 
     with open('Output/master_out.csv', 'a', newline='') as csvfile:
@@ -139,46 +122,46 @@ def prune(rows, n):
                 pruned_rows.append(row)
                 break  # break out of item for loop, back into row for loop
 
-
     return pruned_rows
 
 
-def genOrderedDict(list):
+def gen_ordered_dict(lst):
 
     # Insert each set of items into an ordered dictionary
     od = collections.OrderedDict()
-    for item in list:
+    for item in lst:
         od[item[0]] = item
 
     return od
 
 
 def clean_rows(rows, places_od):
-#
-# run over rows,
-#
-# if the row is not in the 'correct' list of names,
-#     iterate over each item in our dictionaries of alternatives
-#
-#     if it is in one of them
-#         change its name to the 'correct' one (i.e. the key)
-#
-#   will now be left with duplicate rows - same year, month, place
-#
+    #
+    # run over rows,
+    #
+    # if the row is not in the 'correct' list of names,
+    #     iterate over each item in our dictionaries of alternatives
+    #
+    #     if it is in one of them
+    #         change its name to the 'correct' one (i.e. the key)
+    #
+    #   will now be left with duplicate rows - same year, month, place
+    #
     cleaned_rows=[]
 
     return cleaned_rows
 
-def readClinicInfo():
 
-    ClinicInfo=[]
+def read_clinic_info():
+
+    clinic_info = []
 
     with open('Schema/ClinicInfo.csv', newline='') as csvfile:
 
         csvobj = csv.reader(csvfile, dialect='excel')
 
         for row in csvobj:
-            ClinicInfo.append({
+            clinic_info.append({
                 'Name': row[0],
                 'Pop': row[1],
                 'Donor': row[2],
@@ -187,7 +170,7 @@ def readClinicInfo():
                 'Region': row[5]
             })
 
-    return ClinicInfo
+    return clinic_info
 
 
 # Need a way of grouping alternative strings for months

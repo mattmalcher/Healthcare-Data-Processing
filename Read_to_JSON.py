@@ -20,7 +20,8 @@ ClinicData = []
 for in_file in f_list:
 
     # if the file is not an .xlsx then skip to the next one
-    if not in_file.endswith('.xlsx'): continue
+    if not in_file.endswith('.xlsx'):
+        continue
 
     # Get year from the filename using regular expressions
     f_year = year_from_fname(in_file)
@@ -28,8 +29,8 @@ for in_file in f_list:
     # Load workbook object - using data_only=True to get calculated values not formulae
     w_book = load_workbook(path + in_file, data_only=True)
 
-    # Feed the first worksheet into getschema and get back the schema
-    [s_type, schema, schema_id] = getschema(w_book.worksheets[0])
+    # Feed the first worksheet into get_schema and get back the schema
+    [s_type, schema, schema_id] = get_schema(w_book.worksheets[0])
 
     # For each worksheet in the file/'workbook'...
     for w_sheet in w_book:
@@ -96,7 +97,15 @@ for in_file in f_list:
             schema_data = []
 
             for item in schema:
-                value = w_sheet[column[1]+item[0]].value
+
+                try:
+                    # Try using the schema to get a value
+                    value = w_sheet[column[1]+item[0]].value
+
+                except ValueError:
+                    # If not, append an informative error.
+                    value = 'Value Not Found - Check Schema'
+
                 schema_data.append(value)
 
                 try:
@@ -110,7 +119,7 @@ for in_file in f_list:
             # Store the schema data & metadata in a dictionary which can be serialised to a JSON
             ClinicDict = {
                 'region': region,
-                'name': w_sheet[column[1]+'4'].value,
+                'clinic': w_sheet[column[1]+'4'].value,
                 'year': f_year,
                 'month': w_sheet.title,
                 'data': {
