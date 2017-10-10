@@ -10,9 +10,8 @@ path = 'Input/'
 f_list = os.listdir(path)
 
 # List of valid sheet names in the input files
-validsheets = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
-               'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
-               'October', 'November', 'December']
+# Uses list comprehension to generate flat list of months from nested list in Functions.py
+validsheets = [inner for outer in months for inner in outer]
 
 # Empty list to store clinic data objects in
 ClinicData = []
@@ -35,22 +34,32 @@ for in_file in f_list:
     # For each worksheet in the file/'workbook'...
     for w_sheet in w_book:
 
-        datacols = []
+        # Get Region Name from C1 or D1 as appropriate
+        C1 = w_sheet['C1'].value
+        D1 = w_sheet['D1'].value
+
+        if C1 is None and D1 is None:
+            region = 'Not Found in Worksheet'
+
+        elif C1 is not None:
+            region = C1
+
+        elif D1 is not None:
+            region = D1
+
+        # Initialise list of data columns
+        data_cols = []
 
         print('\n\n', in_file, ' - ', w_sheet.title)
 
         # Check if it is a month sheet, If its not, print a descriptive error
         if w_sheet.title not in validsheets:
-            print('Error - Not in list of valid sheet names.')
-            continue
-
-        # otherwise get on with it
-
+            print('Error - Not in list of valid sheet names (Months).')
+            continue  # otherwise get on with it
 
         # Key Assumptions!
         # Each column, from D4 onwards with something in row 4 has data,
         # if there is a blank cell in this row 4 this marks the last column.
-
 
         # Get the column letter for the max column in the sheet
         mx_col = get_column_letter(w_sheet.max_column)
@@ -63,10 +72,12 @@ for in_file in f_list:
         # Get the cell range which includes the potential headers
         cell_range = w_sheet['D4':mx_col + '4']
 
-        # print(cell_range)
-
-        if cell_range[0][0].value is None:
-            print("Error - Blank Column Header(s)")
+        try:
+            # If there is nothing there, print an error.
+            if cell_range[0][0].value is None:
+                print("Error - Blank Column Header(s)")
+        except IndexError:
+            print("Error - Invalid Format Column Header(s)")
 
 
         # Iterate over the potential headers
@@ -77,10 +88,10 @@ for in_file in f_list:
                 break  # Then exit the for loop
             else:
                 # Otherwise, append the header and its column index to the results array.
-                datacols.append([cell.value, cell.column])
+                data_cols.append([cell.value, cell.column])
 
         # Now, iterate over the columns we *HAVE* found data in, and read them in as per the schema.
-        for column in datacols:
+        for column in data_cols:
 
             schema_data = []
 
@@ -96,7 +107,9 @@ for in_file in f_list:
 
                 # print(value,'   ', name)
 
+            # Store the schema data & metadata in a dictionary which can be serialised to a JSON
             ClinicDict = {
+                'region': region,
                 'name': w_sheet[column[1]+'4'].value,
                 'year': f_year,
                 'month': w_sheet.title,
@@ -107,15 +120,16 @@ for in_file in f_list:
                     }
                 }
 
+            # Add the dictionary to the list of dictionaries to be serialised.
             ClinicData.append(ClinicDict)
 
-print('done')
+            # Print a message indicating an item has been added to the JSON
+            print("Data Successfully Extracted")
+
+
+print('\nExtraction Done')
 
 with open('Output/clinicdata.json', 'w') as outfile:
     json.dump(ClinicData, outfile)
 
-# for cd in ClinicData:
-#
-#     if cd.data['type'] == 'Motherhood' and cd.month == 'Jan':
-#
-#         print(cd.name, cd.month, cd.data['type'])
+print('\nData written to \'Output/clinicdata.json\'')

@@ -27,21 +27,6 @@ for item in clinic_data:
 # print(sorted(month_s))
 # print(sorted(clinics_s))
 
-# Need a way of grouping alternative strings for months
-months = [
-            ['Jan', 'jan', 'January', 'january'],
-            ['Feb', 'feb', 'February', 'february', 'Febuary', 'febuary'],
-            ['Mar', 'mar', 'March', 'march'],
-            ['Apr', 'apr', 'April', 'april'],
-            ['May', 'may'],
-            ['Jun', 'jun', 'June', 'june'],
-            ['Jul', 'jul'],
-            ['Aug', 'aug', 'August', 'august'],
-            ['Sep', 'sep', 'Sept', 'sept', 'september', 'September'],
-            ['Oct', 'oct', 'October', 'october'],
-            ['Nov', 'nov', 'November', 'november'],
-            ['Dec', 'dec', 'December', 'december']]
-
 # Read Clinic Info from ClinicInfo.csv
 ClinicInfo = readClinicInfo()
 
