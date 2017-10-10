@@ -55,7 +55,7 @@ def year_from_fname(fname):
     try:
         re_year = re.search(r".*(20[0-9]{2}).*", fname).group(1)
     except AttributeError:
-        print('Year Not Found in Filename')
+        print('\nYear Not Found in Filename: ' + fname)
         re_year = 0
 
     year = int(re_year)
@@ -70,7 +70,7 @@ def schema2header(schema):
 
     for item in schema:
         # Schema consists of a list of lists, join the items in the inner lists using newline chars to generate headers
-        headers.append('\n'.join(item[1:-1]))
+        headers.append('\n'.join(item[1:]))
 
     return headers
 

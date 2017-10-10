@@ -14,12 +14,62 @@ Installed using `pip3 install openpyxl`.
 
 Documentation at: https://openpyxl.readthedocs.org
 
+# Problems with the data 
+There are several things about the way the data is captured which present challenges when
+attempting to clean and process it. The scripts attempt to handle these but ultimately these issues limit how useful a 
+programmatic approach to cleaning the data will be.
+
+In no particular order:
+
+1. There is no year field in the templates, but there will be data from multiple years.
+This means that the year data has to be extracted from the filename which is not particularly robust.
+
+* The year information could easily be removed by renaming the file
+* The filename needs to be a consistent format to extract the year data from it. i.e. always 20XX or XX which is easy to forget.
+
+2. There is inconsistency in the template:
+
+* The 'Region Name:' data is in D1 in the Safe Motherhood and OPD sheets, whilst it is in C1 in Immunisation
+* Totals are in column 'F' in Immunisation, 'W' in Safe Motherhood and 'I' in OPD. (Are totals even used?)
+
+3. There is inconsistency in the way the templates are filled out. Where data is missing,
+* Sometimes the cells are left empty, 
+* Sometimes they are filled with a hyphen '-'
+* Sometimes they are filled with a '0'
+
+4. The way missing months are represented varies. 
+* Sometimes there is a completely blank sheet
+* Sometimes there is a sheet with nothing filled in
+
+
+5. There are many variations on the spellings of single locations. This makes it difficult to group data appropriately,
+as well as making it tricky to do lookups against the name. 
+
+* For example in the provided example files there are five different spellings of 'Yagori':
+ Yagori	
+ Yogori	
+ Yogroi	
+ Yogri	
+ Yagoori
+
+6. The questions are numbered / lettered in such a way that there is not a unique identifier for each question.
+* For example in the OPD spreadsheets, does 4.3.4 refer to the Under 5 or Over 5 ARI Number?
+* Further, some lists take the format 4.3.4, 4.3.5 while others are 10a, 10b etc.
+
+7. The spreadsheets include numerous Merged cells which makes it harder to extract the labels for the data.
+* To work around this the script uses manually edited schema files as a key to map data values to labels. 
+
+
 
 #Current Issues / To Do
 
-* Handling of duplicate files - some error indication
-* A lookup on clinic data - sponsor, population etc
 * Handling of misspellings of clinic names
+
 * Add in some better error reporting to help people fix the mistakes in the input
-* Add in a pointer to the filename
+* Handling of duplicate files - some error indication
+
+* A lookup on clinic data - sponsor, population etc
+* Add in a pointer to the filename for each item of data
+
 * Look at compiling to a distributable executable.
+* update year_from_fname to handle 20188 case (reports 2018 not error)

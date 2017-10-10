@@ -1,7 +1,5 @@
 # Script for scraping & compiling healthcare data from excel files
 
-# Demo version which iterates over files in input and prints out the columns where there is data.
-
 # Function Imports
 from Functions import *
 
@@ -11,7 +9,7 @@ f_list = os.listdir(path)
 
 # List of valid sheet names in the input files
 # Uses list comprehension to generate flat list of months from nested list in Functions.py
-validsheets = [inner for outer in months for inner in outer]
+valid_sheets = [inner for outer in months for inner in outer]
 
 # Empty list to store clinic data objects in
 ClinicData = []
@@ -54,11 +52,11 @@ for in_file in f_list:
         print('\n\n', in_file, ' - ', w_sheet.title)
 
         # Check if it is a month sheet, If its not, print a descriptive error
-        if w_sheet.title not in validsheets:
+        if w_sheet.title not in valid_sheets:
             print('Error - Not in list of valid sheet names (Months).')
             continue  # otherwise get on with it
 
-        # Key Assumptions!
+        # Key Assumption!
         # Each column, from D4 onwards with something in row 4 has data,
         # if there is a blank cell in this row 4 this marks the last column.
 
@@ -77,9 +75,9 @@ for in_file in f_list:
             # If there is nothing there, print an error.
             if cell_range[0][0].value is None:
                 print("Error - Blank Column Header(s)")
+
         except IndexError:
             print("Error - Invalid Format Column Header(s)")
-
 
         # Iterate over the potential headers
         for cell in cell_range[0]:
@@ -126,7 +124,9 @@ for in_file in f_list:
                     'type': s_type,
                     'results': schema_data,
                     'schema_id': schema_id
-                    }
+                    },
+                'f_name': in_file,
+                'w_sheet': w_sheet.title
                 }
 
             # Add the dictionary to the list of dictionaries to be serialised.
