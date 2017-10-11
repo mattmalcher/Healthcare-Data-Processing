@@ -6,7 +6,7 @@ This readme is primarily intended to capture notes and useful references.
 ##Task
 Help produce some scripts to tidy up and compile the Somali Healthcare Data.
 
-#Notes
+#Notes on Software
 ##Reading Excel Files Using Python
 The people at http://www.python-excel.org recommends openpyxl for reading and writing Excel 2010 files.
 This can be installed using `pip3 install openpyxl`.
@@ -71,7 +71,8 @@ This means that the year data has to be extracted from the filename which is not
 
 
 5. There are many variations on the spellings of single locations. This makes it difficult to group data appropriately,
-as well as making it tricky to do lookups against the name. 
+as well as making it tricky to do lookups against the name. I have decided not to add error handling for this because it 
+encourages sloppy data input.
 
 * For example in the provided example files there are five different spellings of 'Yagori':
  Yagori	
@@ -91,20 +92,17 @@ as well as making it tricky to do lookups against the name.
 #Current Issues / To Do
 These items are not presently handled by the script or are known problems.
 
-* Handling of misspellings of clinic names - No encourages bad behaviour
-
-* Add in some better error reporting to help people fix the mistakes in the input
-
 * Handling of duplicate files - some error indication
 
 * A lookup on clinic data - sponsor, population etc
 * Add in a pointer to the filename for each item of data
 
-* Look at compiling to a distributable executable.
 * update year_from_fname to handle 20188 case (reports 2018 not error)
 
 #MPM Tasks
-Produce examples sheet showing 
+Produce examples sheet showing examples of each error and how it can be fixed
 
 #Somalia Tasks
 Clean Data as per the examples sheet
+
+![test](Images/Import Log.png?raw=true)
