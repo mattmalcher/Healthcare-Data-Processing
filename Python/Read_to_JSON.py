@@ -3,8 +3,11 @@
 # Function Imports
 from Functions import *
 
+# Initialise the Import Log
+init_import_log()
+
 # Generate list of input files
-path = 'Input/'
+path = '../Input/'
 f_list = os.listdir(path)
 
 # List of valid sheet names in the input files
@@ -19,6 +22,8 @@ for in_file in f_list:
 
     # if the file is not an .xlsx then skip to the next one
     if not in_file.endswith('.xlsx'):
+        message = 'File Skipped'
+        write_to_log(['Error', message, in_file, 'N/A'])
         continue
 
     # Get year from the filename using regular expressions
@@ -38,7 +43,9 @@ for in_file in f_list:
         D1 = w_sheet['D1'].value
 
         if C1 is None and D1 is None:
-            region = 'Not Found in Worksheet'
+            region = 'Region Name Not Found in Worksheet'
+            print('Error: '+region)
+            write_to_log(['Error', region, in_file, w_sheet])
 
         elif C1 is not None:
             region = C1
@@ -53,7 +60,9 @@ for in_file in f_list:
 
         # Check if it is a month sheet, If its not, print a descriptive error
         if w_sheet.title not in valid_sheets:
-            print('Error - Not in list of valid sheet names (Months).')
+            message = 'Not in list of valid sheet names (Months).'
+            print('Error: ' + message)
+            write_to_log(['Error', message, in_file, w_sheet])
             continue  # otherwise get on with it
 
         # Key Assumption!
@@ -65,7 +74,9 @@ for in_file in f_list:
 
         # If this is A then the sheet is empty - add a message saying so and go on to next sheet
         if mx_col == 'A':
-            print('Error - Empty Sheet')
+            message = 'Empty Sheet'
+            print('Error: ' + message)
+            write_to_log(['Error', message, in_file, w_sheet])
             continue
 
         # Get the cell range which includes the potential headers
@@ -74,10 +85,14 @@ for in_file in f_list:
         try:
             # If there is nothing there, print an error.
             if cell_range[0][0].value is None:
-                print("Error - Blank Column Header(s)")
+                message = "Blank Column Header(s)"
+                print('Error: ' + message)
+                write_to_log(['Error', message, in_file, w_sheet])
 
         except IndexError:
-            print("Error - Invalid Format Column Header(s)")
+            message = "Invalid Format Column Header(s)"
+            print('Error: ' + message)
+            write_to_log(['Error', message, in_file, w_sheet])
 
         # Iterate over the potential headers
         for cell in cell_range[0]:
@@ -103,6 +118,8 @@ for in_file in f_list:
                 except ValueError:
                     # If not, append an informative error.
                     value = 'Value Not Found - Check Schema'
+                    print('Error: ' + value)
+                    write_to_log(['Error', value, in_file, w_sheet])
 
                 schema_data.append(value)
 
@@ -110,7 +127,9 @@ for in_file in f_list:
                     name = item[1:-1]
 
                 except IndexError:
-                    name = ['Error - Schema Format Wrong']
+                    name = ['Schema Format Wrong']
+                    print('Error: ' + name)
+                    write_to_log(['Error', name, in_file, w_sheet])
 
                 # print(value,'   ', name)
 
@@ -133,12 +152,17 @@ for in_file in f_list:
             ClinicData.append(ClinicDict)
 
             # Print a message indicating an item has been added to the JSON
-            print("Data Successfully Extracted")
+            message = "Data Successfully Extracted"
+            print(message)
+            write_to_log(['Success', message, in_file, w_sheet])
 
+message = 'Extraction Complete for files in \'Input\' folder'
+print('\n'+message)
+write_to_log(['Success', message, 'N/A', 'N/A'])
 
-print('\nExtraction Done')
-
-with open('Output/clinicdata.json', 'w') as outfile:
+with open('../Output/clinicdata.json', 'w') as outfile:
     json.dump(ClinicData, outfile)
 
-print('\nData written to \'Output/clinicdata.json\'')
+message = 'Data written to \'Output/clinicdata.json\''
+print('\n'+message)
+write_to_log(['Success', message, 'N/A', 'N/A'])

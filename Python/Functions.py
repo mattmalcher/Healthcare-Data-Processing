@@ -30,17 +30,17 @@ def get_schema(w_sheet):
     sheet_indicator = w_sheet['B5'].value
 
     if sheet_indicator == 'EPI: CHILDREN':
-        schema = read_schema('Schema/Immunisation Schema_01.csv')
+        schema = read_schema('../Schema/Immunisation Schema_01.csv')
         schema_id = 'Immunisation Schema_01'
         s_type='Immunisation'
 
     elif sheet_indicator == 'OUTPATIENT - CURATIVE SERVICES':
-        schema = read_schema('Schema/OPD Schema_01.csv')
+        schema = read_schema('../Schema/OPD Schema_01.csv')
         schema_id = 'OPD Schema_01'
         s_type = 'OPD'
 
     elif sheet_indicator == 'SAFE MOTHERHOOD PROGRAMME':
-        schema = read_schema('Schema/Motherhood Schema_01.csv')
+        schema = read_schema('../Schema/Motherhood Schema_01.csv')
         schema_id = 'Motherhood Schema_01'
         s_type = 'Motherhood'
 
@@ -55,7 +55,9 @@ def year_from_fname(fname):
     try:
         re_year = re.search(r".*(20[0-9]{2}).*", fname).group(1)
     except AttributeError:
-        print('\nYear Not Found in Filename: ' + fname)
+        message = 'Year Not Found in Filename'
+        print('\n' + message + ': ' + fname)
+        write_to_log(['Error', message, fname, 'N/A' ])
         re_year = 0
 
     year = int(re_year)
@@ -77,7 +79,7 @@ def schema2header(schema):
 
 def init_master_csv():
     # Initialise CSV file, writing headers from schema
-    with open('Output/master_out.csv', 'w', newline='') as csvfile:
+    with open('../Output/master_out.csv', 'w', newline='') as csvfile:
         wr = csv.writer(csvfile, dialect='excel')
         wr.writerow(['Compiled healthcare data from files in \'Input\'',])
 
@@ -86,9 +88,9 @@ def init_master_csv():
                         'Clinic Type', 'District', 'Donor',  'Est.Pop.', ' ']         # Items from Lookup
 
         # Read in schema as lists
-        imn_schema = schema2header(read_schema('Schema/Immunisation Schema_01.csv'))
-        opd_schema = schema2header(read_schema('Schema/OPD Schema_01.csv'))
-        mhd_schema = schema2header(read_schema('Schema/Motherhood Schema_01.csv'))
+        imn_schema = schema2header(read_schema('../Schema/Immunisation Schema_01.csv'))
+        opd_schema = schema2header(read_schema('../Schema/OPD Schema_01.csv'))
+        mhd_schema = schema2header(read_schema('../Schema/Motherhood Schema_01.csv'))
 
         # Combine the lists& column headings
         combined_schema = col_headings + imn_schema + opd_schema + mhd_schema
@@ -101,7 +103,7 @@ def init_master_csv():
 def append_data_rows(rows):
     # Function to append rows to the master_out csv initialised by init_mastercsv
 
-    with open('Output/master_out.csv', 'a', newline='') as csvfile:
+    with open('../Output/master_out.csv', 'a', newline='') as csvfile:
         wr = csv.writer(csvfile, dialect='excel')
         for row in rows:
             wr.writerow(row)
@@ -156,7 +158,7 @@ def read_clinic_info():
 
     clinic_info = []
 
-    with open('Schema/ClinicInfo.csv', newline='') as csvfile:
+    with open('../Schema/ClinicInfo.csv', newline='') as csvfile:
 
         csvobj = csv.reader(csvfile, dialect='excel')
 
@@ -187,3 +189,18 @@ months = [
             ['Oct', 'oct', 'October', 'october'],
             ['Nov', 'nov', 'November', 'november', 'Novem', 'novem', 'Novemb' 'novemb'],
             ['Dec', 'dec', 'December', 'december']]
+
+
+def init_import_log():
+    # Function to capture errors
+    with open('../Output/import_log.csv', 'w', newline='') as logfile:
+        wr = csv.writer(logfile, dialect='excel')
+        wr.writerow(['Logfile listing data import errors'])
+        wr.writerow(['Type','Message','File','Worksheet'])
+
+
+def write_to_log(row):
+    # Function to write rows to log csv file
+    with open('../Output/import_log.csv','a', newline='') as logfile:
+        wr = csv.writer(logfile, dialect='excel')
+        wr.writerow(row)

@@ -18,10 +18,13 @@ Documentation at: https://openpyxl.readthedocs.org
 Documentation at: http://nuitka.net/doc/user-manual.html 
 It's quite easy to use to produce distributable C executables from python code.
 
-
 Install Nuitka using:
 
 `pip3 install -U nuitka`
+
+Make sure you have a compiler set up
+* If on macOS you need Xcode with gcc set up
+* If on Windows you can install Visual Studio Community edition
 
 Compile a script, including all its dependencies using:
 
@@ -30,6 +33,13 @@ Compile a script, including all its dependencies using:
 Run the resulting executable:
 
 `./RunScript.exe`
+
+## Compiling the script using PyInstaller
+
+`pip3 install pyinstaller`
+
+`pyinstaller RunScript.py`
+
 
 # Problems with the data 
 There are several things about the way the data is captured which present challenges when

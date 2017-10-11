@@ -4,12 +4,12 @@ from Functions import *
 [col_headings, imn_schema, opd_schema, mhd_schema] = init_master_csv()
 
 # point to JSON written out by Read_to_JSON.py
-clinic_json = 'Output/clinicdata.json'
+clinic_json = '../Output/clinicdata.json'
 
 # Parse the JSON and print the number of clinic_data dictionaries found
 with open(clinic_json) as data_file:
     clinic_data = json.load(data_file)
-    print("\n",len(clinic_data), " Clinics read from JSON: ",)
+    print("\n",len(clinic_data), " Clinics read from JSON",)
 
 # Initialise sets for clinics and years
 clinics_s = set()

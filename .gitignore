@@ -34,3 +34,9 @@ master_out.csv
 
 ###Ignore Misc Data
 Misc/*
+
+###Ignore compiled versions
+*ompiled*
+
+### Ignore Logs
+*_log.csv
