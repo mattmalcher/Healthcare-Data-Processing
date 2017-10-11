@@ -105,4 +105,9 @@ Produce examples sheet showing examples of each error and how it can be fixed
 #Somalia Tasks
 Clean Data as per the examples sheet
 
-![test](Images/Import Log.png?raw=true)
+![test](Images/ImportLog.png?raw=true)
+
+
+![alt text][logo]
+
+[logo]: https://github.com/mattmalcher/Healthcare-Data-Processing/images/ImportLog.png "Logo Title Text 2"
