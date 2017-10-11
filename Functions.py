@@ -82,8 +82,8 @@ def init_master_csv():
         wr.writerow(['Compiled healthcare data from files in \'Input\'',])
 
         # Column Headings for Non-Schema Rows
-        col_headings = ['Year', 'Month','Region', 'Clinic Type',
-                        'District', 'Donor', 'Location of clinic', 'Est.Pop.']
+        col_headings = ['Year', 'Month', 'Region', 'Clinic', ' ',                     # Items ID'ing Data
+                        'Clinic Type', 'District', 'Donor',  'Est.Pop.', ' ']         # Items from Lookup
 
         # Read in schema as lists
         imn_schema = schema2header(read_schema('Schema/Immunisation Schema_01.csv'))
@@ -185,5 +185,5 @@ months = [
             ['Aug', 'aug', 'August', 'august'],
             ['Sep', 'sep', 'Sept', 'sept', 'september', 'September'],
             ['Oct', 'oct', 'October', 'october'],
-            ['Nov', 'nov', 'November', 'november'],
+            ['Nov', 'nov', 'November', 'november', 'Novem', 'novem', 'Novemb' 'novemb'],
             ['Dec', 'dec', 'December', 'december']]

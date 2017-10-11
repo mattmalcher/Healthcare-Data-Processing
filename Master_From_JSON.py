@@ -9,7 +9,7 @@ clinic_json = 'Output/clinicdata.json'
 # Parse the JSON and print the number of clinic_data dictionaries found
 with open(clinic_json) as data_file:
     clinic_data = json.load(data_file)
-    print("Number of clinics: ", len(clinic_data))
+    print("\n",len(clinic_data), " Clinics read from JSON: ",)
 
 # Initialise sets for clinics and years
 clinics_s = set()
@@ -58,7 +58,7 @@ i = 0
 # Iterate over our data_identifiers
 for ids in data_ids:
 
-    # Insert the data identifiers into the first 2 items of data_row
+    # Insert the data identifiers into the first 2 items of data_row (year and month)
     data_rows[i][0:2] = ids[0:2]
 
     # Iterate over our clinic data items read in from the JSON
@@ -72,7 +72,7 @@ for ids in data_ids:
 
             # Set the region & clinic name
             data_rows[i][2] = d_set['region']
-            data_rows[i][6] = d_set['clinic']
+            data_rows[i][3] = d_set['clinic']
 
             # set the appropriate columns of the data row (as determined using generated indexes) to the results values
             if d_set['data']['type'] == 'Immunisation':

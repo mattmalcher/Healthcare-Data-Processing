@@ -31,3 +31,6 @@
 ### Ignore master csv with healthcare data stored in it
 master.csv
 master_out.csv
+
+###Ignore Misc Data
+Misc/*

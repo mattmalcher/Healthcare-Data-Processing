@@ -4,15 +4,32 @@ A small collection of scripts for reading and compiling healthcare data.
 This readme is primarily intended to capture notes and useful references.
 
 ##Task
-Help produce some scripts to tidy up the Somali Healthcare Data.
+Help produce some scripts to tidy up and compile the Somali Healthcare Data.
 
 #Notes
-##Reading Excel Files
-http://www.python-excel.org recommends openpyxl for reading and writing excel 2010 files.
-
-Installed using `pip3 install openpyxl`.
+##Reading Excel Files Using Python
+The people at http://www.python-excel.org recommends openpyxl for reading and writing Excel 2010 files.
+This can be installed using `pip3 install openpyxl`.
 
 Documentation at: https://openpyxl.readthedocs.org
+
+## Compiling the script using Nuitka
+
+Documentation at: http://nuitka.net/doc/user-manual.html 
+It's quite easy to use to produce distributable C executables from python code.
+
+
+Install Nuitka using:
+
+`pip3 install -U nuitka`
+
+Compile a script, including all its dependencies using:
+
+`nuitka --recurse-all RunScript.py` 
+
+Run the resulting executable:
+
+`./RunScript.exe`
 
 # Problems with the data 
 There are several things about the way the data is captured which present challenges when
@@ -36,6 +53,7 @@ This means that the year data has to be extracted from the filename which is not
 * Sometimes the cells are left empty, 
 * Sometimes they are filled with a hyphen '-'
 * Sometimes they are filled with a '0'
+* Sometimes there is data present in the column, but there is no 'Name of MCH' data in row 4
 
 4. The way missing months are represented varies. 
 * Sometimes there is a completely blank sheet
@@ -60,12 +78,13 @@ as well as making it tricky to do lookups against the name.
 * To work around this the script uses manually edited schema files as a key to map data values to labels. 
 
 
-
 #Current Issues / To Do
+These items are not presently handled by the script or are known problems.
 
-* Handling of misspellings of clinic names
+* Handling of misspellings of clinic names - No encourages bad behaviour
 
 * Add in some better error reporting to help people fix the mistakes in the input
+
 * Handling of duplicate files - some error indication
 
 * A lookup on clinic data - sponsor, population etc
@@ -73,3 +92,9 @@ as well as making it tricky to do lookups against the name.
 
 * Look at compiling to a distributable executable.
 * update year_from_fname to handle 20188 case (reports 2018 not error)
+
+#MPM Tasks
+Produce examples sheet showing 
+
+#Somalia Tasks
+Clean Data as per the examples sheet
