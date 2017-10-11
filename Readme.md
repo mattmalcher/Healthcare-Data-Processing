@@ -108,4 +108,4 @@ Clean Data as per the examples sheet
 
 ![alt text][logo]
 
-[logo]: https://github.com/mattmalcher/Healthcare-Data-Processing/images/ImportLog.png "Logo Title Text 2"
+[logo]: https://github.com/mattmalcher/Healthcare-Data-Processing/Images/ImportLog.png "Logo Title Text 2"
