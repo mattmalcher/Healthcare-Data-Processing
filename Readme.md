@@ -62,52 +62,6 @@ The input data used with this script is in Excel documents. These documents are 
 ![Example Data](Markdown_Images/DataExample.png)
 
 
-## Problems with the Data
-There are several things about the way the data is captured which present challenges when
-attempting to clean and process it. The scripts attempt to handle these but ultimately these issues limit how useful a
-programmatic approach to cleaning the data will be.
-
-In no particular order:
-
-1. There is no year field in the templates, but there will be data from multiple years.
-This means that the year data has to be extracted from the filename which is not particularly robust.
-
-* The year information could easily be removed by renaming the file.
-* The filename needs to be a consistent format to extract the year data from it. i.e. always 20XX or XX which is easy to forget.
-
-2. There is inconsistency in the template:
-
-* The 'Region Name:' data is in D1 in the Safe Motherhood and OPD sheets, whilst it is in C1 in Immunisation
-* Totals are in column 'F' in Immunisation, 'W' in Safe Motherhood and 'I' in OPD. (Are totals even used?)
-
-3. There is inconsistency in the way the templates are filled out. Where data is missing,
-* Sometimes the cells are left empty,
-* Sometimes they are filled with a hyphen '-'
-* Sometimes they are filled with a '0'
-* Sometimes there is data present in the column, but there is no 'Name of MCH' data in row 4
-
-4. The way missing months are represented varies.
-* Sometimes there is a completely blank sheet
-* Sometimes there is a sheet with nothing filled in
-
-
-5. There are many variations on the spellings of single locations. This makes it difficult to group data appropriately,
-as well as making it tricky to do lookups against the name. I have decided not to add error handling for this because it
-encourages sloppy data input.
-
-* For example in the provided example files there are five different spellings of 'Yagori':
- Yagori
- Yogori
- Yogroi
- Yogri
- Yagoori
-
-6. The questions are numbered / lettered in such a way that there is not a unique identifier for each question.
-* For example in the OPD spreadsheets, does 4.3.4 refer to the Under 5 or Over 5 ARI Number?
-* Further, some lists take the format 4.3.4, 4.3.5 while others are 10a, 10b etc.
-
-7. The spreadsheets include numerous Merged cells which makes it harder to extract the labels for the data.
-* To work around this the script uses manually edited schema files as a key to map data values to labels.
 
 # Running the Script
 
@@ -146,9 +100,8 @@ Check that the date on these files is the current time - i.e. check that they ha
 ## Step 3 - Look at the Log File
 
 The log file (`import_log.csv`) lists the process the tool has gone through to try and generate the output spreadsheet. When you open it with Excel and resize the columns it looks like this:
-![Example of the Log File][logfile]
-
-Each row in the file 
+![Example of the Log File](Markdown_Images/ImportLog.png)
+Each row in the file
 
 ## Step 4 - Check the Output
 
@@ -174,6 +127,55 @@ Add exception for if the input directory is empty.
 # Somalia Tasks
 Clean Data as per the examples sheet
 
+# Problems with the Data - (or why we have the log file)
+There are multiple things about the way the data is captured which make it really tricky to clean and process it. The script does attempt to handle these. However, ultimately these issues limit how useful a programmatic approach to cleaning the data can be.
+
+## Year Information
+There is no year field in the templates, but there will be data from multiple years.
+This means that the year data has to be extracted from the filename which is not particularly robust.
+
+* The year information could easily be removed by renaming the file.
+* The filename needs to be a consistent format to extract the year data from it. i.e. always 20XX or XX which is easy to forget.
+
+## Template Inconsistency
+There is inconsistency in the template which makes it hard to write rules to extract the data.
+
+* The 'Region Name:' data is in D1 in the Safe Motherhood and OPD sheets, whilst it is in C1 in Immunisation
+* Totals are in column 'F' in Immunisation, 'W' in Safe Motherhood and 'I' in OPD. (Are totals even used?)
+
+## Input Inconsistency
+There is inconsistency in the way the templates are filled out.
+Where data items are missing:
+* Sometimes the cells are left empty,
+* Sometimes they are filled with a hyphen '-'
+* Sometimes they are filled with a '0'
+
+Sometimes there is data present in the column, but there is no 'Name of MCH' data in row 4.
+
+The way missing months are represented varies.
+* Sometimes there is a completely blank sheet
+* Sometimes there is a sheet with nothing filled in
+
+
+There are many variations on the spellings of single locations.
+
+For example in the provided example files there are five different spellings of 'Yagori':
+ * Yagori
+ * Yogori
+ * Yogroi
+ * Yogri
+ * Yagoori
+
+This makes it difficult to group data appropriately, as well as making it tricky to do lookups against the name. I have decided not to add error handling for this because it encourages sloppy data input.
+
+The questions are numbered / lettered in such a way that there is not a unique identifier for each question.
+* For example in the OPD spreadsheets, does 4.3.4 refer to the Under 5 or Over 5 ARI Number?
+* Further, some lists take the format 4.3.4, 4.3.5 while others are 10a, 10b etc.
+
+The spreadsheets include numerous Merged cells which makes it harder to extract the labels for the data.
+* To work around this the script uses manually edited schema files as a key to map data values to labels.
+
+Fixing these things would be helpful going forwards.
 
 
 ! List of images used above
