@@ -40,3 +40,6 @@ Misc/*
 
 ### Ignore Logs
 *_log.csv
+
+### Ignore Clinic List - Sensitive
+*clinic_list_master*

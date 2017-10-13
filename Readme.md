@@ -7,52 +7,6 @@ Produce scripts to tidy up and compile a collection of Somali Healthcare Data.
 The scripts must be easy to use and as robust as is sensible.
 
 
-# Notes on Software
-These notes outline the structure of the scripts to assist anyone wanting to modify or expand upon them
-## Reading Excel Files Using Python
-The people at http://www.python-excel.org recommends openpyxl for reading and writing Excel 2010 files.
-This can be installed using `pip3 install openpyxl`.
-
-Documentation at: https://openpyxl.readthedocs.org
-
-## Code Structure
-The scripts are comprised of 4 main files:
-* Read_to_JSON.py
-* Master_from_JSON.py
-* Functions.py
-* RunScript.py
-
-These are described in the following sections.
-
-### Read_to_JSON.py
-Reads the files placed in ``/Input/``, saving the extracted data to `clinicdata.json` file stored
-in ``/Output/``. It also creates a log file, stored in output showing the data which is successfully
-imported and where errors have occured.
-
-### Master_from_JSON.py
-Reads the JSON and outputs `'master_out.csv'` which contains compiled healthcare information.
-
-### Functions.py
-Referenced by both Read_to_JSON.py and Master_from_JSON.py - contains functions used in both scripts
-
-### RunScript.py
-Wrapper function which calls Read_to_JSON.py, then Master_from_JSON.py. Effectively provides a single target for
-pyinstaller without having to merge the three scripts.
-
-## Compiling the scripts using PyInstaller
-So that the end user does not need to install and configure python and the packages used by the scripts, these scripts
-have been designed to be packaged using pyinstaller before distributing them.
-
-To install pyinstaller (for python 3):
-
-`pip3 install pyinstaller`
-
-To package up the scripts:
-
-`pyinstaller python/RunScript.py`
-
-Note that pyinstaller produces a distributable version for the platform it is run from. I.e. you need to run it on windows
-to generate a distributable for windows.
 
 # Input Data
 
@@ -194,3 +148,50 @@ The spreadsheets include numerous Merged cells which makes it harder to extract 
 * To work around this the script uses manually edited schema files as a key to map data values to labels.
 
 Fixing these things would be helpful going forwards.
+
+# Notes on Software
+These notes outline the structure of the scripts to assist anyone wanting to modify or expand upon them
+## Reading Excel Files Using Python
+The people at http://www.python-excel.org recommends openpyxl for reading and writing Excel 2010 files.
+This can be installed using `pip3 install openpyxl`.
+
+Documentation at: https://openpyxl.readthedocs.org
+
+## Code Structure
+The scripts are comprised of 4 main files:
+* Read_to_JSON.py
+* Master_from_JSON.py
+* Functions.py
+* RunScript.py
+
+These are described in the following sections.
+
+### Read_to_JSON.py
+Reads the files placed in ``/Input/``, saving the extracted data to `clinicdata.json` file stored
+in ``/Output/``. It also creates a log file, stored in output showing the data which is successfully
+imported and where errors have occured.
+
+### Master_from_JSON.py
+Reads the JSON and outputs `'master_out.csv'` which contains compiled healthcare information.
+
+### Functions.py
+Referenced by both Read_to_JSON.py and Master_from_JSON.py - contains functions used in both scripts
+
+### RunScript.py
+Wrapper function which calls Read_to_JSON.py, then Master_from_JSON.py. Effectively provides a single target for
+pyinstaller without having to merge the three scripts.
+
+## Compiling the scripts using PyInstaller
+So that the end user does not need to install and configure python and the packages used by the scripts, these scripts
+have been designed to be packaged using pyinstaller before distributing them.
+
+To install pyinstaller (for python 3):
+
+`pip3 install pyinstaller`
+
+To package up the scripts:
+
+`pyinstaller python/RunScript.py`
+
+Note that pyinstaller produces a distributable version for the platform it is run from. I.e. you need to run it on windows
+to generate a distributable for windows.

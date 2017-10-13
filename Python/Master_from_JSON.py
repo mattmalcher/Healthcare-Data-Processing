@@ -99,5 +99,5 @@ pruned_rows = prune(data_rows, 3)
 # Append the datarows to the file
 append_data_rows(pruned_rows)
 
-
+print('\nDone')
 

@@ -9,6 +9,7 @@ init_import_log()
 # Generate list of input files
 path = '../Input/'
 f_list = os.listdir(path)
+f_count = 0
 
 # List of valid sheet names in the input files
 # Uses list comprehension to generate flat list of months from nested list in Functions.py
@@ -25,6 +26,9 @@ for in_file in f_list:
         message = 'File Skipped'
         write_to_log(['Error', message, in_file, 'N/A'])
         continue
+
+    # Increment the file counter
+    f_count += 1
 
     # Get year from the filename using regular expressions
     f_year = year_from_fname(in_file)
@@ -84,7 +88,7 @@ for in_file in f_list:
 
         try:
             # If there is nothing there, print an error.
-            if cell_range[0][0].value is None:
+            if (cell_range[0][0].value is None) or (cell_range[0][0].value is "TOTAL"):
                 message = "Blank Column Header(s)"
                 print('Error: ' + message)
                 write_to_log(['Error', message, in_file, w_sheet])
@@ -156,9 +160,16 @@ for in_file in f_list:
             print(message)
             write_to_log(['Success', message, in_file, w_sheet])
 
-message = 'Extraction Complete for files in \'Input\' folder'
-print('\n'+message)
-write_to_log(['Success', message, 'N/A', 'N/A'])
+if f_count == 0:
+    message = 'No valid files found in \'Input\' folder'
+    print('\n' + message)
+    write_to_log(['Error', message, 'N/A', 'N/A'])
+
+else:
+    message = 'Extraction Complete for files in \'Input\' folder'
+    print('\n'+message)
+    write_to_log(['Success', message, 'N/A', 'N/A'])
+
 
 with open('../Output/clinicdata.json', 'w') as outfile:
     json.dump(ClinicData, outfile)
