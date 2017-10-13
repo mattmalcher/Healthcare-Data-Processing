@@ -103,7 +103,23 @@ The log file (`import_log.csv`) lists the process the tool has gone through to t
 
 ![Example of the Log File](Markdown_Images/ImportLog.png)
 
-Each row in the file
+Each row in the file shows:
+
+* The type of message (Error / Success)
+* A message
+* The file which the message is about (if applicable)
+* The worksheet which the message is about (if applicable)
+
+### Types of message
+
+Message  | Meaning  
+--|--
+File Skipped  |  The file did not have the extension `.xlsx` (and therefore could not be a valid set of data)
+Data Successfully Extracted  |  A column of data was successfully taken from the Excel sheet and saved. <br>![Data Successfully Extracted](Markdown_Images/Success.png)
+Not in list of valid sheet names (Months).  |  The name of the worksheet was not a known month name - i.e. jan, feb, mar etc. so there is no way to know what month the data is for.!  <br> ![Invalid Sheet Name](Markdown_Images/InvalidSheetName.png)
+Blank Column Header(s)  | The cell at the top of a column of data is empty so there is no way to know which clinic it is for. <br>![Blank Header](Markdown_Images/BlankHeader.png)
+Region Name Not Found In Worksheet  | The 'REGION NAME:' cell in the sheet is empty so the script doesnt know which region the data is for. <br>![Missing Region Name](Markdown_Images/MissingRegionName.png)
+
 
 ## Step 4 - Check the Output
 
@@ -178,7 +194,3 @@ The spreadsheets include numerous Merged cells which makes it harder to extract 
 * To work around this the script uses manually edited schema files as a key to map data values to labels.
 
 Fixing these things would be helpful going forwards.
-
-
-! List of images used above
-[logfile]: https://raw.githubusercontent.com/mattmalcher/Healthcare-Data-Processing/master/Markdown_Images/ImportLog.png "Example Import Log"
