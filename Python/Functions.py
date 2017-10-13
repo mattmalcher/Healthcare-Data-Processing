@@ -153,28 +153,6 @@ def clean_rows(rows, places_od):
 
     return cleaned_rows
 
-
-def read_clinic_info():
-
-    clinic_info = []
-
-    with open('../Schema/ClinicInfo.csv', newline='') as csvfile:
-
-        csvobj = csv.reader(csvfile, dialect='excel')
-
-        for row in csvobj:
-            clinic_info.append({
-                'Name': row[0],
-                'Pop': row[1],
-                'Donor': row[2],
-                'Type': row[3],
-                'District': row[4],
-                'Region': row[5]
-            })
-
-    return clinic_info
-
-
 # Need a way of grouping alternative strings for months
 months = [
             ['Jan', 'jan', 'January', 'january'],
@@ -204,3 +182,48 @@ def write_to_log(row):
     with open('../Output/import_log.csv','a', newline='') as logfile:
         wr = csv.writer(logfile, dialect='excel')
         wr.writerow(row)
+
+
+def get_clinic_info():
+    # point to xlsx containing info on all clinics
+    clinic_info = '../Schema/20170804_clinic_list_master.xlsx'
+
+    # Load the workbook and worksheet
+    w_book = load_workbook(clinic_info, data_only=True)
+    ws = w_book["Table"]
+
+    # Get the column with the clinic unique names in (note 3:0 indexes from 3 to last row with info
+    col_names = ws["G3:G0"]
+
+    # Create a blank dictionary to store the clinic info in
+    clinic_dict = dict()
+
+    # for each clinic row
+    for item in col_names:
+        # Name Cell
+        x = item[0]
+
+        # use the row property of the cell we are on to index into the worksheet and extract items, storing them in a
+        # dictionary
+        new_dict = {
+            "region": ws['A' + str(x.row)].value,
+            "p_code": ws['B' + str(x.row)].value,
+            "branch_coord": ws['C' + str(x.row)].value,
+            "pop": ws['D' + str(x.row)].value,
+            "name": ws['E' + str(x.row)].value,
+            "status": ws['F' + str(x.row)].value,
+            "lat": ws['H' + str(x.row)].value,
+            "lon": ws['I' + str(x.row)].value,
+            "coord_src": ws['J' + str(x.row)].value,
+            "focal_pt": ws['K' + str(x.row)].value,
+            "focal_no": ws['L' + str(x.row)].value,
+            "funding": ws['N' + str(x.row)].value,
+            "funding_end": ws['O' + str(x.row)].value,
+            "district": ws['P' + str(x.row)].value,
+            "info": ws['Q' + str(x.row)].value
+        }
+
+        # add this dictionary to the clinic dictionary with a key of the clinic name
+        clinic_dict[x.value] = new_dict
+
+    return clinic_dict
