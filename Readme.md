@@ -100,7 +100,9 @@ Check that the date on these files is the current time - i.e. check that they ha
 ## Step 3 - Look at the Log File
 
 The log file (`import_log.csv`) lists the process the tool has gone through to try and generate the output spreadsheet. When you open it with Excel and resize the columns it looks like this:
+
 ![Example of the Log File](Markdown_Images/ImportLog.png)
+
 Each row in the file
 
 ## Step 4 - Check the Output
