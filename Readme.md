@@ -2,16 +2,23 @@
 # Introduction
 This repository contains a small collection of scripts for reading and compiling healthcare data.
 
+## Contents
+* Input Data Format
+* Running the Tool
+* Problems with the Data
+* Notes on Software
+
 ## Task
-Produce scripts to tidy up and compile a collection of Somali Healthcare Data.
-The scripts must be easy to use and as robust as is sensible.
+Produce a tool to tidy up and compile a collection of Somali Healthcare Data into a master spreadsheet.
+The tool must be easy to use and as robust as is sensible. It must be assumed that the end user *may* have limited computer skills and not be comfortable with python.
 
-# Input Data
+# Input Data Format
+The input data used with this script are Excel documents. These documents are for a specific region. Within each document are worksheets for each month data is collected for, with rows of data items. There are several data columns in each worksheet, each containing data for a clinic within the region.
 
-## Format
-The input data used with this script is in Excel documents. These documents are for a specific region. Within each document are worksheets for each month, with rows of data. There are several data columns in each worksheet, each containing data for a clinic within the region.
+Example input data is included in this repository and can be found at: `Schema/Example 20xx Input.xlsx`
 
 ![Example Data](Markdown_Images/DataExample.png)
+
 
 # Running the Tool
 
@@ -91,8 +98,6 @@ Could Not Find Schema  |  The tool uses three schema files which tell it where t
 
 Once the tool has run, you can look at the output summary sheet `master_out.csv`. You can open this in Excel to tidy up the formatting and do further work.
 
-
-
 # Problems with the Data - (or why we have the log file)
 There are multiple things about the way the data is captured which make it really tricky to clean and process it. The script does attempt to handle these. However, ultimately these issues limit how useful a programmatic approach to cleaning the data can be.
 
@@ -141,10 +146,11 @@ The questions are numbered / lettered in such a way that there is not a unique i
 The spreadsheets include numerous Merged cells which makes it harder to extract the labels for the data.
 * To work around this the script uses manually edited schema files as a key to map data values to labels.
 
-Fixing these things would be helpful going forwards.
+Fixing these issues with the data would be helpful going forwards!
 
 # Notes on Software
-These notes outline the structure of the scripts to assist anyone wanting to modify or expand upon them
+These notes outline the structure of the scripts to assist anyone wanting to modify or expand upon them.
+
 ## Reading Excel Files Using Python
 The people at http://www.python-excel.org recommends openpyxl for reading and writing Excel 2010 files.
 This can be installed using `pip3 install openpyxl`.

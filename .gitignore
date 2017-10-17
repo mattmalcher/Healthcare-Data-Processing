@@ -43,3 +43,9 @@ Misc/*
 
 ### Ignore Clinic List - Sensitive
 *clinic_list_master*
+
+### Ignore folder of compiled & zipped distributables
+Distributables/
+
+### Ignore Shortcuts
+*.Ink
