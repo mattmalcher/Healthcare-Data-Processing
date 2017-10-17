@@ -28,7 +28,7 @@ Double click on the `HealthcareProcessing.zip` file provided. Extract all the fi
 Navigate to the folder where you extracted the files.
 
 Check that everything is present. You should have a folder called HealthcareTool, within which is the following:
-* A shortcut called `HealthcareTool` - double click this to run the tool.
+* A file called `Run.bat` - double click this to run the tool.
 
 * A folder called `Input` - this is where you put the files you want to process. At present it contains three sets of example input data in folders. To run the tool on these you can copy them to the root of the `Input` Folder. The example datasets are called:
   - `Example Messy`
@@ -55,7 +55,7 @@ Each time the tool is run, it re-scans all of the files in `/Input` so if you ta
 
 ## Step 2 - Run the Tool
 
-Once all your files are in place, to run the tool, double click on the `HealthcareTool` shortcut.
+Once all your files are in place, to run the tool, double click on the `Run.bat` file.
 
 You should see a black window pop up, which will show the files which the tool is processing.
 
@@ -156,6 +156,12 @@ The people at http://www.python-excel.org recommends openpyxl for reading and wr
 This can be installed using `pip3 install openpyxl`.
 
 Documentation at: https://openpyxl.readthedocs.org
+
+## Reading Excel Files Using Python
+Fuzzy matching for clinic names implemented using the following guide:
+https://marcobonzanini.com/2015/02/25/fuzzy-string-matching-in-python/
+
+Fuzzywuzzy package installed using `pip3 install fuzzywuzzy`.
 
 ## Code Structure
 The scripts are comprised of 4 main files:
