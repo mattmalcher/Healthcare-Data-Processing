@@ -157,7 +157,7 @@ This can be installed using `pip3 install openpyxl`.
 
 Documentation at: https://openpyxl.readthedocs.org
 
-## Reading Excel Files Using Python
+## Fuzzy Matching for Clinic Names
 Fuzzy matching for clinic names implemented using the following guide:
 https://marcobonzanini.com/2015/02/25/fuzzy-string-matching-in-python/
 
