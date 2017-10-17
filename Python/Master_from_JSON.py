@@ -21,7 +21,7 @@ for item in clinic_data:
     year_s.add(item['year'])
 
 # Read Clinic Info from ClinicInfo.csv
-ClinicInfo = read_clinic_info()
+all_clinics_dict = get_clinic_info()
 
 # Generate an ordered dictionary of months using above list of lists
 # (Ordered dictionary is required to maintain jan-dec ordering when doing this)
@@ -73,6 +73,16 @@ for ids in data_ids:
             # Set the region & clinic name
             data_rows[i][2] = d_set['region']
             data_rows[i][3] = d_set['clinic']
+
+            # Get the clinic information dictionary for this region & clinic
+            clin_dict = extract_clinic_info(all_clinics_dict, d_set['region'], d_set['clinic'])
+
+            # use it to foll out the following items in the data row
+            data_rows[i][5] = clin_dict['status']       # Clinic Type
+            data_rows[i][6] = clin_dict['district']     # District
+            data_rows[i][7] = clin_dict['funding']      # Donor
+            data_rows[i][8] = clin_dict['pop']          # Est.Pop.
+
 
             # set the appropriate columns of the data row (as determined using generated indexes) to the results values
             if d_set['data']['type'] == 'Immunisation':

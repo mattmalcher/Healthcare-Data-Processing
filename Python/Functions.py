@@ -6,6 +6,7 @@ import os
 import collections
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
+from fuzzywuzzy import process
 
 
 def read_schema(filename):
@@ -227,3 +228,22 @@ def get_clinic_info():
         clinic_dict[x.value] = new_dict
 
     return clinic_dict
+
+
+def extract_clinic_info(all_clinics_dict, region, clinic):
+    # Function using fuzzy matching to figure out which clinic in the in the all_clinics_dict produced by
+    # get_clinic_info() is the best match for the provided (potentially misspelled) region & name strings
+
+    # get the proper names for the clinics from the dictionary keys
+    proper_names = all_clinics_dict.keys()
+
+    # concatenate provided region & name with a space
+    trial_name = region + " " + clinic
+
+    # Select the string from proper names which is the best match
+    key = process.extractOne(trial_name, proper_names)[0]
+
+    # Use this to index into the dictionary and return the full dict for the best matching item
+    single_clinic_dict = all_clinics_dict[key]
+
+    return single_clinic_dict
