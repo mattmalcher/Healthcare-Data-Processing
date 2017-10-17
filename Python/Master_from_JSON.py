@@ -99,10 +99,6 @@ for ids in data_ids:
 
     i += 1  # Increment data row counter
 
-
-# clean rows
-# Idea is to have a function here which handles duplicates caused by misspelled clinic names - i.e. yagoori yagori etc
-
 # Prune empty datarows - ignoring first 3 columns
 pruned_rows = prune(data_rows, 3)
 

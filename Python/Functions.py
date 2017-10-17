@@ -14,15 +14,22 @@ def read_schema(filename):
 
     csvcontents = []
 
-    with open(filename, newline='') as csvfile:
+    try:
+        # Attempt to open & parse the schema
+        with open(filename, newline='') as csvfile:
 
-        csvobj = csv.reader(csvfile, delimiter=',', quotechar='|')
+            csvobj = csv.reader(csvfile, delimiter=',', quotechar='|')
 
-        for row in csvobj:
-            csvcontents.append(row)
+            for row in csvobj:
+                csvcontents.append(row)
 
-    return csvcontents
+        return csvcontents
 
+    except FileNotFoundError:
+        message = 'Could Not Find Schema'
+        print( message + ' ' + filename)
+        write_to_log(['Error', message, filename, 'N/A'])
+        exit() # Cant do much without the schema!
 
 def get_schema(w_sheet):
     # Function which takes a worksheet and returns the appropriate schema
@@ -189,48 +196,54 @@ def get_clinic_info():
     # point to xlsx containing info on all clinics
     clinic_info = '../Schema/20170804_clinic_list_master.xlsx'
 
-    # Load the workbook and worksheet
-    w_book = load_workbook(clinic_info, data_only=True)
-    ws = w_book["Table"]
-
-    # Get the column with the clinic unique names in (note 3:0 indexes from 3 to last row with info
-    col_names = ws["G3:G0"]
-
     # Create a blank dictionary to store the clinic info in
     clinic_dict = dict()
 
-    # for each clinic row
-    for item in col_names:
-        # Name Cell
-        x = item[0]
+    # Load the workbook and worksheet
+    try:
+        w_book = load_workbook(clinic_info, data_only=True)
+        ws = w_book["Table"]
 
-        # use the row property of the cell we are on to index into the worksheet and extract items, storing them in a
-        # dictionary
-        new_dict = {
-            "region": ws['A' + str(x.row)].value,
-            "p_code": ws['B' + str(x.row)].value,
-            "branch_coord": ws['C' + str(x.row)].value,
-            "pop": ws['D' + str(x.row)].value,
-            "name": ws['E' + str(x.row)].value,
-            "status": ws['F' + str(x.row)].value,
-            "lat": ws['H' + str(x.row)].value,
-            "lon": ws['I' + str(x.row)].value,
-            "coord_src": ws['J' + str(x.row)].value,
-            "focal_pt": ws['K' + str(x.row)].value,
-            "focal_no": ws['L' + str(x.row)].value,
-            "funding": ws['N' + str(x.row)].value,
-            "funding_end": ws['O' + str(x.row)].value,
-            "district": ws['P' + str(x.row)].value,
-            "info": ws['Q' + str(x.row)].value
-        }
+        # Get the column with the clinic unique names in (note 3:0 indexes from 3 to last row with info
+        col_names = ws["G3:G0"]
 
-        # add this dictionary to the clinic dictionary with a key of the clinic name
-        clinic_dict[x.value] = new_dict
+        # for each clinic row
+        for item in col_names:
+            # Name Cell
+            x = item[0]
+
+            # use the row property of the cell we are on to index into the worksheet and extract items, storing them in a
+            # dictionary
+            new_dict = {
+                "region": ws['A' + str(x.row)].value,
+                "p_code": ws['B' + str(x.row)].value,
+                "branch_coord": ws['C' + str(x.row)].value,
+                "pop": ws['D' + str(x.row)].value,
+                "name": ws['E' + str(x.row)].value,
+                "status": ws['F' + str(x.row)].value,
+                "lat": ws['H' + str(x.row)].value,
+                "lon": ws['I' + str(x.row)].value,
+                "coord_src": ws['J' + str(x.row)].value,
+                "focal_pt": ws['K' + str(x.row)].value,
+                "focal_no": ws['L' + str(x.row)].value,
+                "funding": ws['N' + str(x.row)].value,
+                "funding_end": ws['O' + str(x.row)].value,
+                "district": ws['P' + str(x.row)].value,
+                "info": ws['Q' + str(x.row)].value
+            }
+
+            # add this dictionary to the clinic dictionary with a key of the clinic name
+            clinic_dict[x.value] = new_dict
+
+    except FileNotFoundError:
+        print('\nCould Not Find ' + clinic_info)
+        write_to_log(['Error','Could Not Find Clinic Information', clinic_info, 'N/A'])
 
     return clinic_dict
 
 
 def extract_clinic_info(all_clinics_dict, region, clinic):
+
     # Function using fuzzy matching to figure out which clinic in the in the all_clinics_dict produced by
     # get_clinic_info() is the best match for the provided (potentially misspelled) region & name strings
 
@@ -240,10 +253,23 @@ def extract_clinic_info(all_clinics_dict, region, clinic):
     # concatenate provided region & name with a space
     trial_name = region + " " + clinic
 
-    # Select the string from proper names which is the best match
-    key = process.extractOne(trial_name, proper_names)[0]
+    try:
+        # Select the string from proper names which is the best match
+        key = process.extractOne(trial_name, proper_names)[0]
 
-    # Use this to index into the dictionary and return the full dict for the best matching item
-    single_clinic_dict = all_clinics_dict[key]
+        # Use this to index into the dictionary and return the full dict for the best matching item
+        single_clinic_dict = all_clinics_dict[key]
+
+    except TypeError:
+
+        # If a match cannot be made, potentially because proper_names is empty as all_clinics_dict is empty,
+        # use descriptive placeholders
+
+        single_clinic_dict = {
+            'status': 'Not Found',        # Clinic Type
+            'district': 'Not Found',      # District
+            'funding': 'Not Found',       # Donor
+            'pop': 'Not Found'            # Est.Pop.
+        }
 
     return single_clinic_dict
