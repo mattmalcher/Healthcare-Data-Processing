@@ -164,7 +164,7 @@ if f_count == 0:
     message = 'No valid files found in \'Input\' folder'
     print('\n' + message)
     write_to_log(['Error', message, 'N/A', 'N/A'])
-    exit() # Not much point going futher if there is no identified input
+    sys.exit() # Not much point going futher if there is no identified input
 
 else:
     message = 'Extraction Complete for files in \'Input\' folder'

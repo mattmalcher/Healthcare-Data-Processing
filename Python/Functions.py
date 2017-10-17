@@ -3,6 +3,7 @@ import csv
 import re
 import json
 import os
+import sys
 import collections
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter
@@ -29,7 +30,7 @@ def read_schema(filename):
         message = 'Could Not Find Schema'
         print( message + ' ' + filename)
         write_to_log(['Error', message, filename, 'N/A'])
-        exit() # Cant do much without the schema!
+        sys.exit() # Cant do much without the schema!
 
 def get_schema(w_sheet):
     # Function which takes a worksheet and returns the appropriate schema
