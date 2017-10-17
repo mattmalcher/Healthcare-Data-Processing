@@ -6,8 +6,6 @@ This repository contains a small collection of scripts for reading and compiling
 Produce scripts to tidy up and compile a collection of Somali Healthcare Data.
 The scripts must be easy to use and as robust as is sensible.
 
-
-
 # Input Data
 
 ## Format
@@ -15,18 +13,28 @@ The input data used with this script is in Excel documents. These documents are 
 
 ![Example Data](Markdown_Images/DataExample.png)
 
-
-
-# Running the Script
+# Running the Tool
 
 ## Step 0 - Prepare the Tool
 Double click on the `HealthcareProcessing.zip` file provided. Extract all the files to a location you wish to keep the tool.
 
 Navigate to the folder where you extracted the files.
 
-Check that everything is present. You should have
+Check that everything is present. You should have a folder called HealthcareTool, within which is the following:
+* A shortcut called `HealthcareTool` - double click this to run the tool.
+
+* A folder called `Input` - this is where you put the files you want to process. At present it contains three sets of example input data in folders. To run the tool on these you can copy them to the root of the `Input` Folder. The example datasets are called:
+  - `Example Messy`
+  - `Example Original`
+  - `Example Tidy`
 
 
+* A folder called `Output` - results will appear here once you run the tool.
+
+* A folder called `Compiled_Windows` - leave this alone, it contains the code for the tool.
+* A folder called `Python` - you can ignore this unless you are interested in modifying the tool :)
+
+* A folder called `Schema` - you can ignore this folder. It contains data which the tool needs to run. This is both data on all the clinics in Somalia, as well as the structure of the input files to allow them to be read.
 
 ## Step 1 - Collect the Input Data
 
@@ -34,11 +42,13 @@ The tool operates the data found in the healthcare data spreadsheets which are i
 
 Collect the Excel healthcare data spreadsheets which you wish to produce a summary sheet for and put them in the `/Input` folder. Make sure that there are no other files in this folder.
 
+Note that files in subdirectories are ignored by the tool. There are three example datasets in the n
+
 Each time the tool is run, it re-scans all of the files in `/Input` so if you take a file out of the folder or delete it then it will no longer appear in the summary sheet.
 
 ## Step 2 - Run the Tool
 
-Once all your files are in place, to run the tool, double click on the `SummariseData` shortcut.
+Once all your files are in place, to run the tool, double click on the `HealthcareTool` shortcut.
 
 You should see a black window pop up, which will show the files which the tool is processing.
 
@@ -73,31 +83,15 @@ Data Successfully Extracted  |  A column of data was successfully taken from the
 Not in list of valid sheet names (Months).  |  The name of the worksheet was not a known month name - i.e. jan, feb, mar etc. so there is no way to know what month the data is for.!  <br> ![Invalid Sheet Name](Markdown_Images/InvalidSheetName.png)
 Blank Column Header(s)  | The cell at the top of a column of data is empty so there is no way to know which clinic it is for. <br>![Blank Header](Markdown_Images/BlankHeader.png)
 Region Name Not Found In Worksheet  | The 'REGION NAME:' cell in the sheet is empty so the script doesnt know which region the data is for. <br>![Missing Region Name](Markdown_Images/MissingRegionName.png)
+Could Not Find Clinic Information  |  The clinic information in the Clinic Type, District,	Donor and	Est.Pop. columns is stored in an excel file in the Schema Folder. If this file cannot be found then these columns will not be filled in. Try doing Step 0 again.
+Could Not Find Schema  |  The tool uses three schema files which tell it where to find the data in the input spreadsheets. If these schema files cannot be found then the tool cannot run. Try doing Step 0 again.
 
 
 ## Step 4 - Check the Output
 
-Once the tool has run, you can look at the output summary
+Once the tool has run, you can look at the output summary sheet `master_out.csv`. You can open this in Excel to tidy up the formatting and do further work.
 
 
-
-# Current Issues / To Do
-These items are not presently handled by the script or are known problems.
-
-* Handling of duplicate files - some error indication
-
-* A lookup on clinic data - sponsor, population etc
-* Add in a pointer to the filename for each item of data
-
-* update year_from_fname to handle 20188 case (reports 2018 not error)
-
-# MPM Tasks
-Produce examples sheet showing examples of each error and how it can be fixed
-
-Add exception for if the input directory is empty.
-
-# Somalia Tasks
-Clean Data as per the examples sheet
 
 # Problems with the Data - (or why we have the log file)
 There are multiple things about the way the data is captured which make it really tricky to clean and process it. The script does attempt to handle these. However, ultimately these issues limit how useful a programmatic approach to cleaning the data can be.
